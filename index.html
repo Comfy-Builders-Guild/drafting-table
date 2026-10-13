@@ -178,7 +178,7 @@ dialog::backdrop{background:rgba(15,25,35,.55)}
       </section>
 
       <section class="view" id="view-lookup" hidden>
-        <h2>Check your Rank</h2>
+        <h2>Check Your Rank</h2>
         <p class="lead">Look up your rank, points, and what you still need for the next one.</p>
         <div class="lookup">
           <input type="text" placeholder="Your in-game name" aria-label="Your in-game name" disabled>
@@ -293,7 +293,7 @@ function render(){
 function renderMenu(){
   const b=(id,label)=>`<button data-view="${esc(id)}">${esc(label)}</button>`;
   document.getElementById("menu").innerHTML =
-    `<h2>Guild Hall</h2>${b("start","Start here")}${b("lookup","Find your record")}${b("ranks","Ranks")}`+
+    `<h2>Guild Hall</h2>${b("start","Start here")}${b("lookup","Check Your Rank")}${b("ranks","Ranks")}`+
     `<h2>The Blueprints</h2>${codexCats.map(c=>b("bp:"+c,c)).join("")}${b("after","After Architect")}`;
 }
 
