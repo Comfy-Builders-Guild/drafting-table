@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Drafting Table</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔨</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   COLORS: change these to restyle the whole site
+   ============================================================ */
+:root{
+  --bg:#e9eef3;          /* page background */
+  --grid:rgba(63,101,133,.09); /* blueprint grid lines */
+  --surface:#f7f9fb;     /* panels */
+  --ink:#1c2a38;         /* main text */
+  --muted:#566b7e;       /* secondary text */
+  --blue:#3f6585;        /* guild blue */
+  --blue-soft:#d5e1ec;
+  --line:#b9c8d6;
+  --plank:#9a7651;       /* rank ladder wood */
+  --plank-dark:#6e5236;
+  --gold:#b88a2e;        /* Architect of Ages */
+  --gold-soft:#f3e6c4;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#16212c; --grid:rgba(143,166,186,.07); --surface:#1e2c3a;
+    --ink:#e3eaf1; --muted:#9fb2c3; --blue:#8fb3d4; --blue-soft:#2a3d50;
+    --line:#34495d; --plank:#a9845d; --plank-dark:#7d5f40;
+    --gold:#d9b25a; --gold-soft:#3a3120;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  font-family:"Alegreya Sans",system-ui,sans-serif;
+  font-size:1.0625rem; line-height:1.55; color:var(--ink);
+  background-color:var(--bg);
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+}
+h1,h2,h3{font-family:"Alegreya",Georgia,serif;line-height:1.15;margin:0}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* ---------- header ---------- */
+header{padding:48px 0 8px}
+header h1{font-size:clamp(2.6rem,7vw,4.2rem);font-weight:800;letter-spacing:-.01em}
+header p{margin:.35rem 0 0;color:var(--muted);font-size:1.15rem}
+.announce{margin-top:18px;padding:10px 14px;border-left:4px solid var(--gold);background:var(--gold-soft);border-radius:0 6px 6px 0}
+
+/* ---------- tabs ---------- */
+nav.tabs{display:flex;gap:4px;margin:28px 0 0;border-bottom:2px solid var(--line)}
+nav.tabs button{
+  font:inherit;font-weight:700;font-size:1.05rem;background:none;border:0;
+  color:var(--muted);padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px
+}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blue)}
+main{padding:28px 0 60px}
+section.panel[hidden]{display:none}
+.panel > h2{font-size:1.7rem;margin-bottom:6px}
+.lead{color:var(--muted);margin:0 0 22px;max-width:62ch}
+
+/* ---------- rank ladder (the plank) ---------- */
+.ladder{margin:8px 0 40px}
+.plank{
+  position:relative;height:30px;border-radius:4px;
+  background:linear-gradient(180deg,var(--plank),var(--plank-dark));
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.18);
+}
+.tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.55)}
+.tick span{position:absolute;top:34px;left:50%;transform:translateX(-50%);font-weight:700;font-size:.85rem;color:var(--muted);white-space:nowrap}
+.ranks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;margin-top:44px}
+.rank h3{font-size:1.3rem}
+.rank .pts{color:var(--blue);font-weight:700}
+.rank p{margin:.25rem 0 0;color:var(--muted);font-size:.98rem}
+
+/* ---------- lookup ---------- */
+.lookup{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.lookup input{flex:1 1 240px;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
+.btn{font:inherit;font-weight:700;padding:9px 16px;border-radius:6px;border:1px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--blue)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.note{color:var(--muted);font-size:.95rem;margin:0 0 36px}
+
+/* ---------- starter steps ---------- */
+.starter{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px}
+.starter h2{font-size:1.5rem}
+.starter ol{list-style:none;counter-reset:s;padding:0;margin:18px 0 0}
+.starter li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:4px 12px;padding:14px 0;border-top:1px solid var(--line)}
+.starter li::before{content:counter(s);grid-row:span 3;font-family:"Alegreya",serif;font-weight:800;font-size:1.6rem;color:var(--blue);line-height:1}
+.starter h3{font-size:1.15rem}
+.starter p{margin:0;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.actions .btn{font-size:.95rem;padding:6px 12px}
+
+/* ---------- codex ---------- */
+.cat{margin-bottom:34px}
+.cat h3{font-size:1.25rem;color:var(--blue);padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.entry{
+  display:block;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;
+  padding:12px 6px;border-bottom:1px dashed var(--line);cursor:pointer
+}
+.entry:hover{background:var(--blue-soft)}
+.entry strong{font-size:1.08rem}
+.entry span{display:block;color:var(--muted)}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--blue-soft);color:var(--blue);margin-left:6px;vertical-align:2px}
+.tag.pending{background:var(--gold-soft);color:var(--gold)}
+
+/* achievements */
+.ach{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px 24px}
+.ach div{padding:10px 0;border-bottom:1px dashed var(--line)}
+.ach strong{display:block}
+.ach span{color:var(--muted);font-size:.97rem}
+.capstone{margin-top:22px;display:flex;gap:18px;align-items:center;padding:18px;border:2px solid var(--gold);border-radius:8px;background:var(--gold-soft)}
+.capstone svg{flex:0 0 56px;color:var(--gold)}
+.capstone h4{font-family:"Alegreya",serif;font-size:1.3rem;margin:0}
+.capstone p{margin:.2rem 0 0}
+
+/* ---------- dialog ---------- */
+dialog{border:1px solid var(--line);border-radius:10px;padding:0;max-width:620px;width:calc(100% - 32px);background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(15,25,35,.55)}
+.dlg{padding:26px}
+.dlg h2{font-size:1.7rem;margin-bottom:10px}
+.dlg dl{margin:16px 0 0}
+.dlg dt{font-weight:700;margin-top:12px}
+.dlg dd{margin:2px 0 0;color:var(--muted)}
+.dlg code{display:block;white-space:pre-wrap;word-break:break-word;background:var(--bg);padding:8px 10px;border-radius:6px;font-size:.92rem;color:var(--ink)}
+.dlg .close{float:right}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:.95rem}
+footer q{font-style:italic}
+.status{padding:30px;text-align:center;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){ dialog[open]{animation:pop .15s ease-out} @keyframes pop{from{transform:translateY(8px);opacity:0}} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="siteTitle">The Drafting Table</h1>
+    <p id="eraLine">Builders Guild on Comfy Valheim</p>
+    <div id="announce" class="announce" hidden></div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="lookup">Builder Lookup</button>
+    <button role="tab" aria-selected="false" data-tab="codex">The Blueprints</button>
+  </nav>
+
+  <main>
+    <div id="loading" class="status">Loading the latest from the guild...</div>
+
+    <section class="panel" id="tab-lookup" hidden>
+      <h2>Find your record</h2>
+      <p class="lead">Look up your rank, points, and what you still need for the next one.</p>
+      <div class="lookup">
+        <input type="text" placeholder="Your in-game name" aria-label="Your in-game name" disabled>
+        <button class="btn" disabled>Look up</button>
+      </div>
+      <p class="note">Player lookup goes live once the tracker is connected. For now, here's how ranks work.</p>
+
+      <div class="ladder" id="ladder"></div>
+      <div class="starter" id="starter"></div>
+    </section>
+
+    <section class="panel" id="tab-codex" hidden>
+      <h2>The Blueprints</h2>
+      <p class="lead">How points, submissions, and programs work. Tap anything for the full details.</p>
+      <div id="codex"></div>
+      <div class="cat">
+        <h3>After Architect</h3>
+        <div class="ach" id="achievements"></div>
+        <div id="capstone"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>Kept by Brokkr and Sindri, smiths of the Builders Guild.</div>
+    <div id="keeperLine"></div>
+  </footer>
+</div>
+
+<dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
+
+<script>
+/* ============================================================
+   THE ONE SETTING YOU MIGHT CHANGE:
+   the ID of the Drafting Table Content Google Sheet
+   (the long string between /d/ and /edit in the sheet's address)
+   ============================================================ */
+const SHEET_ID = "1xykrqJ57RUDuVE_foepeqie8hTpQImI6kMAuvZqFv-8";
+
+const TABS = ["Settings","Codex","Ranks","Achievements","Starter Steps","Keepers"];
+const data = {};
+const settings = {};
+
+function sheetUrl(tab){
+  return "https://docs.google.com/spreadsheets/d/" + SHEET_ID +
+    "/gviz/tq?tqx=out:csv&headers=1&sheet=" + encodeURIComponent(tab);
+}
+
+/* small CSV reader that handles quotes, commas, and line breaks inside cells */
+function parseCSV(text){
+  const rows=[]; let row=[], cell="", q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){
+      if(c==='"'){ if(text[i+1]==='"'){cell+='"';i++;} else q=false; }
+      else cell+=c;
+    }else if(c==='"') q=true;
+    else if(c===','){row.push(cell);cell="";}
+    else if(c==='\n'){row.push(cell);rows.push(row);row=[];cell="";}
+    else if(c!=='\r') cell+=c;
+  }
+  if(cell!==""||row.length){row.push(cell);rows.push(row);}
+  if(!rows.length) return [];
+  const head=rows[0].map(h=>h.trim());
+  return rows.slice(1).filter(r=>r.some(v=>v.trim()!=="")).map(r=>{
+    const o={}; head.forEach((h,i)=>o[h]=(r[i]||"").trim()); return o;
+  });
+}
+
+const esc = s => String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const shown = rows => rows.filter(r=>(r.Show||"Yes").toLowerCase()!=="no")
+                          .sort((a,b)=>(parseFloat(a.Order)||0)-(parseFloat(b.Order)||0));
+const isYes = v => String(v||"").toLowerCase()==="yes";
+
+async function load(){
+  try{
+    const results = await Promise.all(TABS.map(t=>fetch(sheetUrl(t)).then(r=>{
+      if(!r.ok) throw new Error(t); return r.text();
+    })));
+    TABS.forEach((t,i)=>data[t]=parseCSV(results[i]));
+    data.Settings.forEach(r=>settings[r.Key]=r.Value);
+    render();
+  }catch(e){
+    document.getElementById("loading").innerHTML =
+      "Couldn't load the guild info. The content sheet may not be shared yet. "+
+      "In Google Sheets, set Share to Anyone with the link, Viewer, then refresh this page.";
+  }
+}
+
+function render(){
+  document.getElementById("loading").hidden=true;
+  if(settings.site_title){ document.getElementById("siteTitle").textContent=settings.site_title; document.title=settings.site_title; }
+  if(settings.era_name) document.getElementById("eraLine").textContent="Builders Guild on Comfy Valheim, "+settings.era_name;
+  if(settings.announcement){ const a=document.getElementById("announce"); a.textContent=settings.announcement; a.hidden=false; }
+  renderLadder(); renderStarter(); renderCodex(); renderAchievements(); renderKeeper();
+  showTab(location.hash==="#codex"?"codex":"lookup");
+}
+
+function renderLadder(){
+  const ranks=shown(data.Ranks);
+  const max=Math.max(...ranks.map(r=>parseFloat(r["Points Needed"])||0),1);
+  const ticks=ranks.map(r=>{
+    const p=(parseFloat(r["Points Needed"])||0)/max*100;
+    const left=Math.min(Math.max(p,1),99);
+    return `<div class="tick" style="left:${left}%"><span>${esc(r["Points Needed"])}</span></div>`;
+  }).join("");
+  const cards=ranks.map(r=>`<div class="rank">
+      <h3>${esc(r.Rank)}</h3>
+      <div class="pts">${esc(r["Points Needed"])} point${r["Points Needed"]==="1"?"":"s"}</div>
+      ${r["Other Requirements"]?`<p>Plus ${esc(r["Other Requirements"])}</p>`:""}
+    </div>`).join("");
+  document.getElementById("ladder").innerHTML =
+    `<div class="plank" role="img" aria-label="Rank ladder from Builder to Architect">${ticks}</div><div class="ranks">${cards}</div>`;
+}
+
+function actionButton(label,target){
+  if(!label) return "";
+  const bootcampOpen=isYes(settings.bootcamp_signups_open);
+  if(target==="bootcamp-auto") target = bootcampOpen ? "setting:bootcamp_signup_url" : "codex:bootcamp";
+  if(target.startsWith("setting:")) target=settings[target.slice(8)]||"";
+  if(target.startsWith("codex:")) return `<button class="btn ghost" data-codex="${esc(target.slice(6))}">${esc(label)}</button>`;
+  if(target==="tab:codex") return `<button class="btn ghost" data-goto="codex">${esc(label)}</button>`;
+  if(/^https?:\/\//.test(target)) return `<a class="btn ghost" href="${esc(target)}" target="_blank" rel="noopener">${esc(label)}</a>`;
+  return `<button class="btn ghost" disabled title="Link not set yet">${esc(label)}</button>`;
+}
+
+function renderStarter(){
+  const steps=shown(data["Starter Steps"]);
+  if(!steps.length){document.getElementById("starter").hidden=true;return;}
+  document.getElementById("starter").innerHTML=`<h2>New here? Start with these</h2><ol>${
+    steps.map(s=>`<li><h3>${esc(s["Step Title"])}</h3><p>${esc(s.Text)}</p>
+      <div class="actions">${[1,2,3].map(n=>actionButton(s[`Button ${n} Label`],s[`Button ${n} Goes To`]||"")).join("")}</div></li>`).join("")
+  }</ol>`;
+}
+
+function renderCodex(){
+  const rows=shown(data.Codex).filter(r=>r.Status!=="Retired");
+  const cats=[...new Set(rows.map(r=>r.Category||"Other"))];
+  document.getElementById("codex").innerHTML=cats.map(c=>`<div class="cat"><h3>${esc(c)}</h3>${
+    rows.filter(r=>(r.Category||"Other")===c).map(r=>`<button class="entry" data-codex="${esc(r.ID)}">
+      <strong>${esc(r.Title)}</strong>${r.Status==="Pending Approval"?'<span class="tag pending" style="display:inline-block">Coming soon</span>':""}
+      <span>${esc(r.Summary)}</span></button>`).join("")
+  }</div>`).join("");
+}
+
+function hammer(){
+  return `<svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" fill="currentColor">
+    <rect x="10" y="8" width="44" height="20" rx="3"/><rect x="28" y="26" width="8" height="26" rx="2"/>
+    <rect x="25" y="50" width="14" height="8" rx="2"/></svg>`;
+}
+
+function renderAchievements(){
+  const rows=shown(data.Achievements).filter(r=>r.Status!=="Retired");
+  const normal=rows.filter(r=>!isYes(r.Capstone)), cap=rows.filter(r=>isYes(r.Capstone));
+  document.getElementById("achievements").innerHTML=normal.map(r=>`<div><strong>${esc(r.Achievement)}</strong><span>${esc(r.Requirements)}</span></div>`).join("");
+  document.getElementById("capstone").innerHTML=cap.map(r=>`<div class="capstone">${hammer()}<div>
+      <h4>${esc(r.Achievement)}${r.Status==="Pending Approval"?' <span class="tag pending">Coming soon</span>':""}</h4>
+      <p>${esc(r.Requirements)}${isYes(r.Repeatable)?". Repeatable every era.":""}</p>
+      ${r.Reward?`<p><strong>Reward:</strong> ${esc(r.Reward)}</p>`:""}</div></div>`).join("");
+}
+
+function renderKeeper(){
+  const lines=shown(data.Keepers);
+  if(!lines.length) return;
+  const l=lines[Math.floor(Math.random()*lines.length)];
+  document.getElementById("keeperLine").innerHTML=`${esc(l.Speaker)}: <q>${esc(l.Line)}</q>`;
+}
+
+function openCodex(id){
+  const r=data.Codex.find(x=>x.ID===id);
+  if(!r) return;
+  const field=(label,val,code)=>val?`<dt>${label}</dt><dd>${code?`<code>${esc(val)}</code>`:esc(val)}</dd>`:"";
+  document.getElementById("dlgBody").innerHTML=`
+    <button class="btn ghost close" data-close>Close</button>
+    <h2>${esc(r.Title)}</h2>
+    <p>${esc(r.Details||r.Summary)}</p>
+    <dl>${field("How to submit",r["How to Submit"])}${field("Command",r.Command,true)}${field("Points",r.Points)}</dl>`;
+  showTab("codex");
+  document.getElementById("dlg").showModal();
+}
+
+function showTab(name){
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===name));
+  document.getElementById("tab-lookup").hidden=name!=="lookup";
+  document.getElementById("tab-codex").hidden=name!=="codex";
+  history.replaceState(null,"",name==="codex"?"#codex":location.pathname);
+}
+
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-tab],[data-codex],[data-goto],[data-close]");
+  if(!t) return;
+  if(t.dataset.tab) showTab(t.dataset.tab);
+  else if(t.dataset.codex) openCodex(t.dataset.codex);
+  else if(t.dataset.goto) showTab(t.dataset.goto);
+  else if(t.hasAttribute("data-close")) document.getElementById("dlg").close();
+});
+document.getElementById("dlg").addEventListener("click",e=>{ if(e.target.id==="dlg") e.target.close(); });
+
+load();
+</script>
+</body>
+</html>
