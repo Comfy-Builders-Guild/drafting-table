@@ -52,81 +52,84 @@ a{color:var(--blue)}
 :focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .wrap{max-width:960px;margin:0 auto;padding:0 20px}
 
-/* ---------- header ---------- */
-header{padding:48px 0 8px}
-header h1{font-size:clamp(2.6rem,7vw,4.2rem);font-weight:800;letter-spacing:-.01em}
-header p{margin:.35rem 0 0;color:var(--muted);font-size:1.15rem}
-.announce{margin-top:18px;padding:10px 14px;border-left:4px solid var(--gold);background:var(--gold-soft);border-radius:0 6px 6px 0}
+/* ---------- page frame: menu | main | side ---------- */
+.wrap{max-width:1280px}
+header{padding:36px 0 22px;border-bottom:2px solid var(--line)}
+header h1{font-size:clamp(2.4rem,5vw,3.6rem);font-weight:800;letter-spacing:-.01em}
+header p{margin:.3rem 0 0;color:var(--muted);font-size:1.1rem}
+.frame{display:grid;grid-template-columns:210px minmax(0,1fr) 260px;gap:36px;padding:28px 0 60px;align-items:start}
 
-/* ---------- tabs ---------- */
-nav.tabs{display:flex;gap:4px;margin:28px 0 0;border-bottom:2px solid var(--line)}
-nav.tabs button{
-  font:inherit;font-weight:700;font-size:1.05rem;background:none;border:0;
-  color:var(--muted);padding:10px 16px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px
+/* left menu */
+.menu{position:sticky;top:20px}
+.menu h2{font-size:1.05rem;color:var(--muted);margin:18px 0 6px;padding-left:10px}
+.menu h2:first-child{margin-top:0}
+.menu button{
+  display:block;width:100%;text-align:left;font:inherit;font-weight:500;color:var(--ink);
+  background:none;border:0;border-left:3px solid transparent;padding:6px 10px;cursor:pointer;border-radius:0 6px 6px 0
 }
-nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--blue)}
-main{padding:28px 0 60px}
-section.panel[hidden]{display:none}
-.panel > h2{font-size:1.7rem;margin-bottom:6px}
+.menu button:hover{background:var(--blue-soft)}
+.menu button[aria-current="page"]{border-left-color:var(--blue);background:var(--blue-soft);font-weight:700}
+
+/* center */
+.view[hidden]{display:none}
+.view > h2{font-size:2rem;margin-bottom:6px}
 .lead{color:var(--muted);margin:0 0 22px;max-width:62ch}
 
-/* ---------- rank ladder (the plank) ---------- */
-.ladder{margin:8px 0 40px}
-.plank{
-  position:relative;height:30px;border-radius:4px;
-  background:linear-gradient(180deg,var(--plank),var(--plank-dark));
-  box-shadow:inset 0 -3px 0 rgba(0,0,0,.18);
-}
+/* right side */
+.side{position:sticky;top:20px;display:flex;flex-direction:column;gap:18px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.box h3{font-size:1.15rem;margin-bottom:6px}
+.box p{margin:0;color:var(--muted);font-size:.97rem}
+.box.gold{border-color:var(--gold);background:var(--gold-soft)}
+.box.gold p{color:var(--ink)}
+.keeper q{font-style:italic;color:var(--ink)}
+.keeper .who{display:block;margin-top:6px;font-weight:700;color:var(--muted);font-size:.9rem}
+.links a{display:block;padding:5px 0;font-weight:500}
+
+/* rank ladder (the plank) */
+.plank{position:relative;height:30px;border-radius:4px;background:linear-gradient(180deg,var(--plank),var(--plank-dark));box-shadow:inset 0 -3px 0 rgba(0,0,0,.18);margin-top:8px}
 .tick{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.55)}
 .tick span{position:absolute;top:34px;left:50%;transform:translateX(-50%);font-weight:700;font-size:.85rem;color:var(--muted);white-space:nowrap}
-.ranks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;margin-top:44px}
+.ranks{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:44px}
 .rank h3{font-size:1.3rem}
 .rank .pts{color:var(--blue);font-weight:700}
 .rank p{margin:.25rem 0 0;color:var(--muted);font-size:.98rem}
 
-/* ---------- lookup ---------- */
+/* lookup */
 .lookup{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .lookup input{flex:1 1 240px;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink)}
 .btn{font:inherit;font-weight:700;padding:9px 16px;border-radius:6px;border:1px solid var(--blue);background:var(--blue);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
 .btn.ghost{background:transparent;color:var(--blue)}
 .btn[disabled]{opacity:.5;cursor:not-allowed}
-.note{color:var(--muted);font-size:.95rem;margin:0 0 36px}
+.note{color:var(--muted);font-size:.95rem}
 
-/* ---------- starter steps ---------- */
-.starter{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px}
-.starter h2{font-size:1.5rem}
-.starter ol{list-style:none;counter-reset:s;padding:0;margin:18px 0 0}
-.starter li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:4px 12px;padding:14px 0;border-top:1px solid var(--line)}
+/* starter steps */
+.starter{list-style:none;counter-reset:s;padding:0;margin:0}
+.starter li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:4px 12px;padding:16px 0;border-top:1px solid var(--line)}
 .starter li::before{content:counter(s);grid-row:span 3;font-family:"Alegreya",serif;font-weight:800;font-size:1.6rem;color:var(--blue);line-height:1}
 .starter h3{font-size:1.15rem}
 .starter p{margin:0;color:var(--muted)}
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .actions .btn{font-size:.95rem;padding:6px 12px}
 
-/* ---------- codex ---------- */
-.cat{margin-bottom:34px}
-.cat h3{font-size:1.25rem;color:var(--blue);padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:4px}
-.entry{
-  display:block;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;
-  padding:12px 6px;border-bottom:1px dashed var(--line);cursor:pointer
-}
+/* blueprints entries */
+.entry{display:block;width:100%;text-align:left;font:inherit;color:inherit;background:none;border:0;padding:14px 8px;border-bottom:1px dashed var(--line);cursor:pointer}
 .entry:hover{background:var(--blue-soft)}
-.entry strong{font-size:1.08rem}
-.entry span{display:block;color:var(--muted)}
-.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 8px;border-radius:99px;background:var(--blue-soft);color:var(--blue);margin-left:6px;vertical-align:2px}
-.tag.pending{background:var(--gold-soft);color:var(--gold)}
+.entry strong{font-size:1.1rem}
+.entry span.sum{display:block;color:var(--muted)}
+.tag{display:inline-block;font-size:.78rem;font-weight:700;padding:1px 8px;border-radius:99px;margin-left:6px;vertical-align:2px;background:var(--gold-soft);color:var(--gold)}
 
 /* achievements */
-.ach{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px 24px}
+.ach{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px 24px}
 .ach div{padding:10px 0;border-bottom:1px dashed var(--line)}
 .ach strong{display:block}
 .ach span{color:var(--muted);font-size:.97rem}
 .capstone{margin-top:22px;display:flex;gap:18px;align-items:center;padding:18px;border:2px solid var(--gold);border-radius:8px;background:var(--gold-soft)}
 .capstone svg{flex:0 0 56px;color:var(--gold)}
-.capstone h4{font-family:"Alegreya",serif;font-size:1.3rem;margin:0}
+.capstone h3{font-size:1.3rem}
 .capstone p{margin:.2rem 0 0}
 
-/* ---------- dialog ---------- */
+/* popup */
 dialog{border:1px solid var(--line);border-radius:10px;padding:0;max-width:620px;width:calc(100% - 32px);background:var(--surface);color:var(--ink)}
 dialog::backdrop{background:rgba(15,25,35,.55)}
 .dlg{padding:26px}
@@ -136,12 +139,23 @@ dialog::backdrop{background:rgba(15,25,35,.55)}
 .dlg dd{margin:2px 0 0;color:var(--muted)}
 .dlg code{display:block;white-space:pre-wrap;word-break:break-word;background:var(--bg);padding:8px 10px;border-radius:6px;font-size:.92rem;color:var(--ink)}
 .dlg .close{float:right}
-
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:.95rem}
-footer q{font-style:italic}
 .status{padding:30px;text-align:center;color:var(--muted)}
 @media (prefers-reduced-motion:no-preference){ dialog[open]{animation:pop .15s ease-out} @keyframes pop{from{transform:translateY(8px);opacity:0}} }
+
+/* medium screens: side column drops under the main area */
+@media (max-width:1050px){
+  .frame{grid-template-columns:200px minmax(0,1fr)}
+  .side{grid-column:2;position:static}
+}
+/* phones: menu becomes a scrolling strip across the top */
+@media (max-width:720px){
+  .frame{grid-template-columns:1fr;gap:22px;padding-top:16px}
+  .menu{position:static;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px}
+  .menu h2{display:none}
+  .menu button{width:auto;white-space:nowrap;border-left:0;border-bottom:3px solid transparent;border-radius:6px 6px 0 0}
+  .menu button[aria-current="page"]{border-bottom-color:var(--blue)}
+  .side{grid-column:1}
+}
 </style>
 </head>
 <body>
@@ -149,46 +163,59 @@ footer q{font-style:italic}
   <header>
     <h1 id="siteTitle">The Drafting Table</h1>
     <p id="eraLine">Builders Guild on Comfy Valheim</p>
-    <div id="announce" class="announce" hidden></div>
   </header>
 
-  <nav class="tabs" role="tablist">
-    <button role="tab" aria-selected="true" data-tab="lookup">Builder Lookup</button>
-    <button role="tab" aria-selected="false" data-tab="codex">The Blueprints</button>
-  </nav>
+  <div class="frame">
+    <nav class="menu" id="menu" aria-label="Site menu"></nav>
 
-  <main>
-    <div id="loading" class="status">Loading the latest from the guild...</div>
+    <main id="main">
+      <div id="loading" class="status">Loading the latest from the guild...</div>
 
-    <section class="panel" id="tab-lookup" hidden>
-      <h2>Find your record</h2>
-      <p class="lead">Look up your rank, points, and what you still need for the next one.</p>
-      <div class="lookup">
-        <input type="text" placeholder="Your in-game name" aria-label="Your in-game name" disabled>
-        <button class="btn" disabled>Look up</button>
-      </div>
-      <p class="note">Player lookup goes live once the tracker is connected. For now, here's how ranks work.</p>
+      <section class="view" id="view-start" hidden>
+        <h2>Start here</h2>
+        <p class="lead">New to the Builders Guild? These will get you settled in.</p>
+        <ol class="starter" id="starter"></ol>
+      </section>
 
-      <div class="ladder" id="ladder"></div>
-      <div class="starter" id="starter"></div>
-    </section>
+      <section class="view" id="view-lookup" hidden>
+        <h2>Find your record</h2>
+        <p class="lead">Look up your rank, points, and what you still need for the next one.</p>
+        <div class="lookup">
+          <input type="text" placeholder="Your in-game name" aria-label="Your in-game name" disabled>
+          <button class="btn" disabled>Look up</button>
+        </div>
+        <p class="note">Player lookup goes live once the tracker is connected.</p>
+      </section>
 
-    <section class="panel" id="tab-codex" hidden>
-      <h2>The Blueprints</h2>
-      <p class="lead">How points, submissions, and programs work. Tap anything for the full details.</p>
-      <div id="codex"></div>
-      <div class="cat">
-        <h3>After Architect</h3>
+      <section class="view" id="view-ranks" hidden>
+        <h2>Ranks</h2>
+        <p class="lead">Points carry over as you go. Hit the points and the extra requirements to rank up.</p>
+        <div id="ladder"></div>
+      </section>
+
+      <section class="view" id="view-blueprints" hidden>
+        <h2 id="bpTitle">The Blueprints</h2>
+        <p class="lead">Tap anything for the full details.</p>
+        <div id="bpList"></div>
+      </section>
+
+      <section class="view" id="view-after" hidden>
+        <h2>After Architect</h2>
+        <p class="lead">Made it to Architect? These are what's next.</p>
         <div class="ach" id="achievements"></div>
         <div id="capstone"></div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <footer>
-    <div>Kept by Brokkr and Sindri, smiths of the Builders Guild.</div>
-    <div id="keeperLine"></div>
-  </footer>
+    <aside class="side" id="side" aria-label="Guild extras">
+      <div class="box gold" id="announce" hidden></div>
+      <div class="box keeper" id="keeper">
+        <h3>From the forge</h3>
+        <p>Kept by Brokkr and Sindri, smiths of the Builders Guild.</p>
+      </div>
+      <div class="box links" id="links" hidden><h3>Quick links</h3></div>
+    </aside>
+  </div>
 </div>
 
 <dialog id="dlg"><div class="dlg" id="dlgBody"></div></dialog>
@@ -251,74 +278,72 @@ async function load(){
   }
 }
 
+let codexCats=[];
+
 function render(){
   document.getElementById("loading").hidden=true;
   if(settings.site_title){ document.getElementById("siteTitle").textContent=settings.site_title; document.title=settings.site_title; }
   if(settings.era_name) document.getElementById("eraLine").textContent="Builders Guild on Comfy Valheim, "+settings.era_name;
-  if(settings.announcement){ const a=document.getElementById("announce"); a.textContent=settings.announcement; a.hidden=false; }
-  renderLadder(); renderStarter(); renderCodex(); renderAchievements(); renderKeeper();
-  showTab(location.hash==="#codex"?"codex":"lookup");
+  if(settings.announcement){ const a=document.getElementById("announce"); a.innerHTML=`<h3>Heads up</h3><p>${esc(settings.announcement)}</p>`; a.hidden=false; }
+  codexCats=[...new Set(shown(data.Codex).filter(r=>r.Status!=="Retired").map(r=>r.Category||"Other"))];
+  renderMenu(); renderStarter(); renderLadder(); renderAchievements(); renderKeeper(); renderLinks();
+  showView(decodeURIComponent(location.hash.slice(1))||"start");
+}
+
+function renderMenu(){
+  const b=(id,label)=>`<button data-view="${esc(id)}">${esc(label)}</button>`;
+  document.getElementById("menu").innerHTML =
+    `<h2>Guild Hall</h2>${b("start","Start here")}${b("lookup","Find your record")}${b("ranks","Ranks")}`+
+    `<h2>The Blueprints</h2>${codexCats.map(c=>b("bp:"+c,c)).join("")}${b("after","After Architect")}`;
 }
 
 function renderLadder(){
   const ranks=shown(data.Ranks);
   const max=Math.max(...ranks.map(r=>parseFloat(r["Points Needed"])||0),1);
   const ticks=ranks.map(r=>{
-    const p=(parseFloat(r["Points Needed"])||0)/max*100;
-    const left=Math.min(Math.max(p,1),99);
-    return `<div class="tick" style="left:${left}%"><span>${esc(r["Points Needed"])}</span></div>`;
+    const p=Math.min(Math.max((parseFloat(r["Points Needed"])||0)/max*100,1),99);
+    return `<div class="tick" style="left:${p}%"><span>${esc(r["Points Needed"])}</span></div>`;
   }).join("");
-  const cards=ranks.map(r=>`<div class="rank">
-      <h3>${esc(r.Rank)}</h3>
+  const cards=ranks.map(r=>`<div class="rank"><h3>${esc(r.Rank)}</h3>
       <div class="pts">${esc(r["Points Needed"])} point${r["Points Needed"]==="1"?"":"s"}</div>
-      ${r["Other Requirements"]?`<p>Plus ${esc(r["Other Requirements"])}</p>`:""}
-    </div>`).join("");
-  document.getElementById("ladder").innerHTML =
-    `<div class="plank" role="img" aria-label="Rank ladder from Builder to Architect">${ticks}</div><div class="ranks">${cards}</div>`;
+      ${r["Other Requirements"]?`<p>Plus ${esc(r["Other Requirements"])}</p>`:""}</div>`).join("");
+  document.getElementById("ladder").innerHTML=`<div class="plank" role="img" aria-label="Rank ladder from Builder to Architect">${ticks}</div><div class="ranks">${cards}</div>`;
 }
 
 function actionButton(label,target){
   if(!label) return "";
-  const bootcampOpen=isYes(settings.bootcamp_signups_open);
-  if(target==="bootcamp-auto") target = bootcampOpen ? "setting:bootcamp_signup_url" : "codex:bootcamp";
+  if(target==="bootcamp-auto") target = isYes(settings.bootcamp_signups_open) ? "setting:bootcamp_signup_url" : "codex:bootcamp";
   if(target.startsWith("setting:")) target=settings[target.slice(8)]||"";
   if(target.startsWith("codex:")) return `<button class="btn ghost" data-codex="${esc(target.slice(6))}">${esc(label)}</button>`;
-  if(target==="tab:codex") return `<button class="btn ghost" data-goto="codex">${esc(label)}</button>`;
+  if(target==="tab:codex"){ const first=codexCats[0]?"bp:"+codexCats[0]:"start"; return `<button class="btn ghost" data-view="${esc(first)}">${esc(label)}</button>`; }
+  if(target.startsWith("view:")) return `<button class="btn ghost" data-view="${esc(target.slice(5))}">${esc(label)}</button>`;
   if(/^https?:\/\//.test(target)) return `<a class="btn ghost" href="${esc(target)}" target="_blank" rel="noopener">${esc(label)}</a>`;
   return `<button class="btn ghost" disabled title="Link not set yet">${esc(label)}</button>`;
 }
 
 function renderStarter(){
-  const steps=shown(data["Starter Steps"]);
-  if(!steps.length){document.getElementById("starter").hidden=true;return;}
-  document.getElementById("starter").innerHTML=`<h2>New here? Start with these</h2><ol>${
-    steps.map(s=>`<li><h3>${esc(s["Step Title"])}</h3><p>${esc(s.Text)}</p>
-      <div class="actions">${[1,2,3].map(n=>actionButton(s[`Button ${n} Label`],s[`Button ${n} Goes To`]||"")).join("")}</div></li>`).join("")
-  }</ol>`;
+  document.getElementById("starter").innerHTML=shown(data["Starter Steps"]).map(s=>`<li><h3>${esc(s["Step Title"])}</h3><p>${esc(s.Text)}</p>
+      <div class="actions">${[1,2,3].map(n=>actionButton(s[`Button ${n} Label`],s[`Button ${n} Goes To`]||"")).join("")}</div></li>`).join("");
 }
 
-function renderCodex(){
-  const rows=shown(data.Codex).filter(r=>r.Status!=="Retired");
-  const cats=[...new Set(rows.map(r=>r.Category||"Other"))];
-  document.getElementById("codex").innerHTML=cats.map(c=>`<div class="cat"><h3>${esc(c)}</h3>${
-    rows.filter(r=>(r.Category||"Other")===c).map(r=>`<button class="entry" data-codex="${esc(r.ID)}">
-      <strong>${esc(r.Title)}</strong>${r.Status==="Pending Approval"?'<span class="tag pending" style="display:inline-block">Coming soon</span>':""}
-      <span>${esc(r.Summary)}</span></button>`).join("")
-  }</div>`).join("");
+function renderBlueprints(cat){
+  document.getElementById("bpTitle").textContent=cat;
+  document.getElementById("bpList").innerHTML=shown(data.Codex).filter(r=>r.Status!=="Retired"&&(r.Category||"Other")===cat)
+    .map(r=>`<button class="entry" data-codex="${esc(r.ID)}"><strong>${esc(r.Title)}</strong>${r.Status==="Pending Approval"?'<span class="tag">Coming soon</span>':""}
+      <span class="sum">${esc(r.Summary)}</span></button>`).join("");
 }
 
 function hammer(){
   return `<svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" fill="currentColor">
-    <rect x="10" y="8" width="44" height="20" rx="3"/><rect x="28" y="26" width="8" height="26" rx="2"/>
-    <rect x="25" y="50" width="14" height="8" rx="2"/></svg>`;
+    <rect x="10" y="8" width="44" height="20" rx="3"/><rect x="28" y="26" width="8" height="26" rx="2"/><rect x="25" y="50" width="14" height="8" rx="2"/></svg>`;
 }
 
 function renderAchievements(){
   const rows=shown(data.Achievements).filter(r=>r.Status!=="Retired");
-  const normal=rows.filter(r=>!isYes(r.Capstone)), cap=rows.filter(r=>isYes(r.Capstone));
-  document.getElementById("achievements").innerHTML=normal.map(r=>`<div><strong>${esc(r.Achievement)}</strong><span>${esc(r.Requirements)}</span></div>`).join("");
-  document.getElementById("capstone").innerHTML=cap.map(r=>`<div class="capstone">${hammer()}<div>
-      <h4>${esc(r.Achievement)}${r.Status==="Pending Approval"?' <span class="tag pending">Coming soon</span>':""}</h4>
+  document.getElementById("achievements").innerHTML=rows.filter(r=>!isYes(r.Capstone))
+    .map(r=>`<div><strong>${esc(r.Achievement)}</strong><span>${esc(r.Requirements)}</span></div>`).join("");
+  document.getElementById("capstone").innerHTML=rows.filter(r=>isYes(r.Capstone)).map(r=>`<div class="capstone">${hammer()}<div>
+      <h3>${esc(r.Achievement)}${r.Status==="Pending Approval"?' <span class="tag">Coming soon</span>':""}</h3>
       <p>${esc(r.Requirements)}${isYes(r.Repeatable)?". Repeatable every era.":""}</p>
       ${r.Reward?`<p><strong>Reward:</strong> ${esc(r.Reward)}</p>`:""}</div></div>`).join("");
 }
@@ -327,35 +352,47 @@ function renderKeeper(){
   const lines=shown(data.Keepers);
   if(!lines.length) return;
   const l=lines[Math.floor(Math.random()*lines.length)];
-  document.getElementById("keeperLine").innerHTML=`${esc(l.Speaker)}: <q>${esc(l.Line)}</q>`;
+  document.getElementById("keeper").innerHTML=`<h3>From the forge</h3><q>${esc(l.Line)}</q><span class="who">${esc(l.Speaker)}</span>`;
+}
+
+function renderLinks(){
+  const list=[["Builder shop (order a Space Farm)",settings.builder_shop_url],["Bootcamp signups",isYes(settings.bootcamp_signups_open)?settings.bootcamp_signup_url:""],["Comfy Discord",settings.discord_invite_url]]
+    .filter(([,u])=>/^https?:\/\//.test(u||""));
+  if(!list.length) return;
+  const box=document.getElementById("links");
+  box.innerHTML="<h3>Quick links</h3>"+list.map(([t,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a>`).join("");
+  box.hidden=false;
 }
 
 function openCodex(id){
   const r=data.Codex.find(x=>x.ID===id);
   if(!r) return;
   const field=(label,val,code)=>val?`<dt>${label}</dt><dd>${code?`<code>${esc(val)}</code>`:esc(val)}</dd>`:"";
-  document.getElementById("dlgBody").innerHTML=`
-    <button class="btn ghost close" data-close>Close</button>
-    <h2>${esc(r.Title)}</h2>
-    <p>${esc(r.Details||r.Summary)}</p>
+  document.getElementById("dlgBody").innerHTML=`<button class="btn ghost close" data-close>Close</button>
+    <h2>${esc(r.Title)}</h2><p>${esc(r.Details||r.Summary)}</p>
     <dl>${field("How to submit",r["How to Submit"])}${field("Command",r.Command,true)}${field("Points",r.Points)}</dl>`;
-  showTab("codex");
   document.getElementById("dlg").showModal();
 }
 
-function showTab(name){
-  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===name));
-  document.getElementById("tab-lookup").hidden=name!=="lookup";
-  document.getElementById("tab-codex").hidden=name!=="codex";
-  history.replaceState(null,"",name==="codex"?"#codex":location.pathname);
+function showView(id){
+  const views=["start","lookup","ranks","after"];
+  let viewId=id;
+  if(id.startsWith("bp:")){
+    const cat=id.slice(3);
+    if(codexCats.includes(cat)){ renderBlueprints(cat); viewId="blueprints"; } else { id="start"; viewId="start"; }
+  }else if(!views.includes(id)){ id="start"; viewId="start"; }
+  document.querySelectorAll(".view").forEach(v=>v.hidden=v.id!=="view-"+viewId);
+  document.querySelectorAll(".menu button").forEach(b=>{
+    if(b.dataset.view===id) b.setAttribute("aria-current","page"); else b.removeAttribute("aria-current");
+  });
+  history.replaceState(null,"","#"+encodeURIComponent(id));
 }
 
 document.addEventListener("click",e=>{
-  const t=e.target.closest("[data-tab],[data-codex],[data-goto],[data-close]");
+  const t=e.target.closest("[data-view],[data-codex],[data-close]");
   if(!t) return;
-  if(t.dataset.tab) showTab(t.dataset.tab);
+  if(t.dataset.view){ showView(t.dataset.view); window.scrollTo({top:0}); }
   else if(t.dataset.codex) openCodex(t.dataset.codex);
-  else if(t.dataset.goto) showTab(t.dataset.goto);
   else if(t.hasAttribute("data-close")) document.getElementById("dlg").close();
 });
 document.getElementById("dlg").addEventListener("click",e=>{ if(e.target.id==="dlg") e.target.close(); });
